@@ -71,7 +71,15 @@ jobs:
         run: cp -r lumina-web/dist lumina-api/web-dist
 
       - name: 以标签重写版本号
-        run: cd lumina-api && npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version
+        run: |
+          cd lumina-api
+          DESIRED="${GITHUB_REF_NAME#v}"
+          CURRENT="$(node -p "require('./package.json').version")"
+          if [ "$DESIRED" != "$CURRENT" ]; then
+            npm version "$DESIRED" --no-git-tag-version
+          else
+            echo "版本已一致：$CURRENT"
+          fi
 
       - name: 发布到 GitHub Packages
         run: cd lumina-api && npm publish
