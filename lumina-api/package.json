@@ -1,5 +1,5 @@
 {
-  "name": "@linkium-suki/lumina-api",
+  "name": "@linkium-devteam/lumina-api",
   "version": "2.0.0",
   "description": "微光 Lumina 服务端 — AI 编排 + 互助池协议 + 密钥加密（单进程自托管，内置前端）",
   "license": "Apache-2.0",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Linkium-suki/Project-Lumina.git",
+    "url": "git+https://github.com/Linkium-DevTeam/Project-Lumina.git",
     "directory": "lumina-api"
   },
   "publishConfig": {

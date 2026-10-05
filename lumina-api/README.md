@@ -1,4 +1,4 @@
-# @linkium-suki/lumina-api
+# @linkium-devteam/lumina-api
 
 微光 Lumina（AI 心灵陪伴者）的服务端 npm 发行版：单进程自托管，内置前端与 SQLite，无需 Docker、无需外部数据库。
 
@@ -6,10 +6,10 @@
 
 ```bash
 # 一次性体验（在任意空目录）
-LUMINA_MASTER_KEY=$(openssl rand -base64 32) LUMINA_MOCK=true npx @linkium-suki/lumina-api
+LUMINA_MASTER_KEY=$(openssl rand -base64 32) LUMINA_MOCK=true npx @linkium-devteam/lumina-api
 
 # 全局安装后使用 lumina 命令
-npm i -g @linkium-suki/lumina-api
+npm i -g @linkium-devteam/lumina-api
 LUMINA_MASTER_KEY=$(openssl rand -base64 32) lumina
 ```
 
@@ -29,7 +29,7 @@ LUMINA_MASTER_KEY=$(openssl rand -base64 32) lumina
 | `LUMINA_POOL_DAILY_LIMIT` | 互助模式每日配额 | `60` |
 | `LUMINA_ALLOW_PRIVATE_UPSTREAM` | `true` 允许 ollama 等内网上游 | `false` |
 
-完整配置与 API 见[仓库文档](https://github.com/Linkium-suki/Project-Lumina)。
+完整配置与 API 见[仓库文档](https://github.com/Linkium-DevTeam/Project-Lumina)。
 
 ## 许可
 

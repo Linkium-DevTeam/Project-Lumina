@@ -39,10 +39,10 @@ LUMINA_MASTER_KEY=$(openssl rand -base64 32) LUMINA_MOCK=true npm start
 
 # 3. Docker（GHCR，打 v* 标签自动发布）
 docker run -p 8787:8787 -e LUMINA_MASTER_KEY=$(openssl rand -base64 32) -e LUMINA_MOCK=true \
-  -v lumina-data:/app/lumina-api/data ghcr.io/linkium-suki/project-lumina:latest
+  -v lumina-data:/app/lumina-api/data ghcr.io/linkium-devteam/project-lumina:latest
 
 # 4. npm 直跑（GitHub Packages，GPR 安装需先在 ~/.npmrc 配置 PAT）
-npx @linkium-suki/lumina-api
+npx @linkium-devteam/lumina-api
 ```
 
 要求：Node.js ≥ 22.5（使用内置 `node:sqlite`，无任何原生依赖、无外部服务）。
