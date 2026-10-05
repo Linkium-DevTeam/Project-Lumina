@@ -1,12 +1,28 @@
 {
-  "name": "lumina-api",
+  "name": "@linkium-suki/lumina-api",
   "version": "2.0.0",
-  "private": true,
-  "description": "微光 Lumina 服务端 — AI 编排 + 互助池协议 + 密钥加密",
+  "description": "微光 Lumina 服务端 — AI 编排 + 互助池协议 + 密钥加密（单进程自托管，内置前端）",
   "license": "Apache-2.0",
   "type": "module",
   "engines": {
     "node": ">=22.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Linkium-suki/Project-Lumina.git",
+    "directory": "lumina-api"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist",
+    "web-dist",
+    "bin.mjs",
+    "README.md"
+  ],
+  "bin": {
+    "lumina": "bin.mjs"
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",

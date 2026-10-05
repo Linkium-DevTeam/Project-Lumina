@@ -10,3 +10,4 @@ dist/
 data/
 .DS_Store
 .mimosa/
+lumina-api/web-dist/

@@ -2,7 +2,8 @@ import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { assertMasterKey, config } from "./config.js";
 import { buildApp } from "./app.js";
 
@@ -11,7 +12,14 @@ assertMasterKey();
 const app = buildApp();
 
 // ── 单进程托管前端静态资源（自托管 = 一条命令）──
-const webDist = resolve(process.cwd(), "../lumina-web/dist");
+// 三种运行形态：monorepo 源码（../lumina-web/dist）、npm 安装包（包内 web-dist）、用户自备（cwd/web-dist）
+const here = dirname(fileURLToPath(import.meta.url));
+const webDist =
+  [
+    resolve(process.cwd(), "../lumina-web/dist"),
+    resolve(here, "../web-dist"),
+    resolve(process.cwd(), "web-dist"),
+  ].find((p) => existsSync(p)) ?? resolve(process.cwd(), "../lumina-web/dist");
 
 app.use("*", serveStatic({ root: webDist }));
 

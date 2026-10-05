@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   docker:
-    name: 构建并发布镜像
+    name: 构建并发布镜像（GHCR）
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -43,3 +43,37 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  npm:
+    name: 发布 npm 包（GitHub Packages）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 类型检查与测试
+        run: |
+          npm run typecheck
+          npm test
+
+      - name: 构建
+        run: npm run build
+
+      - name: 打包前端产物进 npm 包
+        run: cp -r lumina-web/dist lumina-api/web-dist
+
+      - name: 以标签重写版本号
+        run: cd lumina-api && npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version
+
+      - name: 发布到 GitHub Packages
+        run: cd lumina-api && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
