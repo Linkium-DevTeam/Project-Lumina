@@ -1,0 +1,24 @@
+# 自托管：一条命令点亮。数据落在 ./data 卷里，完全自持。
+#
+#   LUMINA_MASTER_KEY 必须修改为随机值：openssl rand -base64 32
+#
+# 演示模式（无 Key 体验全流程）：在 environment 里加
+#   LUMINA_MOCK: "true"
+
+services:
+  lumina:
+    build: .
+    container_name: lumina
+    restart: unless-stopped
+    environment:
+      PORT: "8787"
+      LUMINA_MASTER_KEY: ${LUMINA_MASTER_KEY:?请设置 LUMINA_MASTER_KEY（openssl rand -base64 32）}
+      LUMINA_DB_PATH: /app/lumina-api/data/lumina.db
+      LUMINA_POOL_DAILY_LIMIT: ${LUMINA_POOL_DAILY_LIMIT:-60}
+    ports:
+      - "8787:8787"
+    volumes:
+      - lumina-data:/app/lumina-api/data
+
+volumes:
+  lumina-data:

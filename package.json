@@ -1,0 +1,26 @@
+{
+  "name": "project-lumina",
+  "version": "2.0.0",
+  "private": true,
+  "description": "微光 Lumina — 会呼吸的 AI 心灵陪伴者：灵魂光球 + 互助池 + 枪弹分离",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "lumina-api",
+    "lumina-web"
+  ],
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "dev": "concurrently -n api,web -c yellow,cyan \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm run dev -w lumina-api",
+    "dev:web": "npm run dev -w lumina-web",
+    "build": "npm run build -w lumina-web && npm run build -w lumina-api",
+    "start": "npm run start -w lumina-api",
+    "test": "npm run test -w lumina-api",
+    "typecheck": "npm run typecheck -w lumina-api && npm run typecheck -w lumina-web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
