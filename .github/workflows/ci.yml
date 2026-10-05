@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ci:
+    name: 测试与构建
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 类型检查（api + web）
+        run: npm run typecheck
+
+      - name: 单元测试
+        run: npm test
+
+      - name: 构建（web + api）
+        run: npm run build
+
+      - name: 冒烟测试（服务可启动、健康检查可达）
+        run: |
+          LUMINA_MASTER_KEY=ci-smoke-master-key-0123456789abcdef-0123456789abcdef \
+          LUMINA_MOCK=true \
+          LUMINA_DB_PATH=./data/smoke.db \
+          PORT=8799 \
+          node lumina-api/dist/index.js &
+          for i in $(seq 1 20); do
+            if curl -sf http://localhost:8799/api/healthz > /dev/null; then
+              echo "healthz OK"; exit 0
+            fi
+            sleep 1
+          done
+          echo "服务未能在 20 秒内就绪"; exit 1
