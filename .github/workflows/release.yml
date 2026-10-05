@@ -13,7 +13,7 @@ jobs:
     name: 构建并发布镜像（GHCR）
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - uses: docker/setup-buildx-action@v3
 
@@ -48,7 +48,7 @@ jobs:
     name: 发布 npm 包（GitHub Packages）
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-node@v5
         with:
